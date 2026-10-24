@@ -562,14 +562,59 @@ export default function App() {
               </div>
 
               {/* QR Code Simulation */}
-              <div className="text-center my-4">
-                <div className="w-32 h-32 mx-auto bg-white p-2 border-2 border-slate-900 rounded-xl flex items-center justify-center shadow-md">
-                  <QrCode className="w-full h-full text-slate-900" />
-                </div>
-                <p className="text-xs font-mono font-bold text-slate-700 mt-2">
-                  {t[language].promoCode} <span className="text-emerald-700 text-sm">REPLASTIC-KG-2026</span>
-                </p>
-              </div>
+        {/* Ищи экран успешного завершения (SUCCESS / RECEIPT) */}
+{step === 'success' && (
+  <div className="flex flex-col items-center justify-center p-4 text-center">
+    
+    {/* Сообщение на экране терминала */}
+    <div className="no-print mb-4">
+      <h2 className="text-2xl font-bold text-green-400">Бутылка успешно принята!</h2>
+      <p className="text-gray-200 text-sm">Возьмите ваш чек со скидкой ниже</p>
+    </div>
+
+    {/* ВОТ ЭТОТ БЛОК — НАШ МИНИ-ЧЕК ДЛЯ ПРИНТЕРА */}
+    <div 
+      id="printable-receipt" 
+      className="bg-white text-black p-3 rounded-lg shadow-md max-w-[200px] w-full text-center border border-gray-300"
+    >
+      {/* Шапка чека */}
+      <div className="font-bold text-sm tracking-tighter">REPLASTIC</div>
+      <div className="text-[9px] border-b border-black pb-1 mb-1">Тара: ПЭТ Бутылка</div>
+
+      {/* Информация о скидке */}
+      <div className="my-1">
+        <span className="text-xs font-bold block">СКИДКА 10%</span>
+        <span className="text-[8px] text-gray-600 block">Globus / Народный / Alma</span>
+      </div>
+
+      {/* Маленький QR-код */}
+      <div className="flex flex-col items-center justify-center my-1">
+        <img 
+          src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=RP10" 
+          alt="QR" 
+          className="w-12 h-12"
+        />
+        <span className="text-[8px] font-mono mt-0.5">#RP-849</span>
+      </div>
+
+      {/* Кнопка вызова печати (видна только на экране!) */}
+      <button
+        onClick={() => window.print()}
+        className="no-print mt-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-1.5 px-2 text-xs rounded transition-all"
+      >
+        🖨️ Распечатать чек
+      </button>
+    </div>
+
+    {/* Кнопка сброса / Начать заново */}
+    <button 
+      onClick={resetTerminal}
+      className="no-print mt-6 text-xs text-gray-300 underline"
+    >
+      Завершить работу
+    </button>
+  </div>
+)}
 
               {/* Action Buttons */}
               <div className="space-y-2 mt-6">
