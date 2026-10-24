@@ -139,10 +139,19 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen max-w-md mx-auto bg-emerald-950 text-white font-sans flex flex-col justify-between p-4 selection:bg-none">
-      
-   {/* ОБНОВЛЕННЫЕ СТИЛИ ПЕЧАТИ (Крупный шрифт, контраст, отступ для отрыва) */}
+ {/* ОБНОВЛЕННЫЕ СТИЛИ С МАКСИМАЛЬНОЙ ШИРИНОЙ И БЕЗ ВТОРОЙ СТРАНИЦЫ */}
 <style>{`
+@page {
+margin: 0 !important;
+size: auto !important;
+}
 @media print {
+html, body {
+margin: 0 !important;
+padding: 0 !important;
+height: auto !important;
+overflow: hidden !important;
+}
 body * {
 visibility: hidden !important;
 }
@@ -153,23 +162,21 @@ visibility: visible !important;
 position: absolute !important;
 left: 0 !important;
 top: 0 !important;
-width: 54mm !important; /* На всю ширину ленты */
-max-width: 54mm !important;
+width: 100% !important; /* На всю ширину ленты без полей */
+max-width: 100% !important;
 margin: 0 !important;
 padding: 0 !important;
 background: #ffffff !important;
 color: #000000 !important;
 font-family: 'Courier New', monospace, sans-serif !important;
-font-size: 13px !important; /* Увеличенный чёткий шрифт */
-font-weight: bold !important; /* Жирный текст для высокой четкости */
-line-height: 1.2 !important;
+page-break-after: avoid !important;
+page-break-inside: avoid !important;
 }
 .no-print {
 display: none !important;
 }
 }
 `}</style>
-
 {/* ШАПКА ТЕРМИНАЛА (Часы + Вращающийся Логотип + Переключатель Языков) */}
 <header className="no-print space-y-3 border-b border-emerald-800/60 pb-3">
   
@@ -311,49 +318,47 @@ display: none !important;
               <p className="text-[11px] text-emerald-300/80">{t.successDesc}</p>
             </div>{/* МИНИ-ЧЕК ДЛЯ ТЕРМОПРИНТЕРА */}
             {/* МИНИ-ЧЕК С КРУПНЫМ ЧЁТКИМ ШРИФТОМ */}
+{/* МИНИ-ЧЕК БЕЗ РАМОК С КРУПНЫМ ШРИФТОМ НА ВСЮ ШИРИНУ */}
 <div 
 id="printable-receipt" 
-className="bg-white text-black p-4 rounded-xl shadow-xl max-w-[230px] w-full text-center border-2 border-black my-1"
+className="bg-white text-black p-2 rounded-xl shadow-xl max-w-[240px] w-full text-center my-1"
 >
-{/* Шапка */}
-<div className="font-extrabold text-lg tracking-wider border-b-2 border-black pb-1 mb-1.5 uppercase">
+{/* Крупный заголовок во всю ширину */}
+<div className="font-black text-xl tracking-widest border-b-2 border-black pb-1 mb-2 uppercase">
 {t.receiptTitle}
 </div>
 
-{/* Детали */}
-<div className="text-xs font-bold text-left my-1.5 space-y-1">
+{/* Тара и Объем — Крупный шрифт без рамок */}
+<div className="text-sm font-black text-left my-2 space-y-1">
 <p className="flex justify-between">
 <span>{t.receiptType}:</span>
-<span className="font-extrabold">{t[selectedTypeKey]}</span>
+<span className="text-base">{t[selectedTypeKey]}</span>
 </p>
 <p className="flex justify-between">
 <span>{t.receiptVolume}:</span>
-<span>{t.receiptVolumeVal}</span>
+<span className="text-base">{t.receiptVolumeVal}</span>
 </p>
 </div>
 
-{/* Крупный блок скидки */}
-<div className="border-t-2 border-b-2 border-black py-2 my-2 bg-gray-100">
-<span className="text-base font-black block tracking-wide">{t.receiptDiscount}</span>
-<span className="text-[10px] font-bold block text-black">{t.receiptPartners}</span>
+{/* Огромная Скидка без названий магазинов */}
+<div className="border-t-2 border-b-2 border-black py-2 my-2">
+<span className="text-xl font-black block tracking-wider">{t.receiptDiscount}</span>
 </div>
 
-{/* Увеличенный QR-код */}
+{/* Четкий QR-код */}
 <div className="flex flex-col items-center justify-center my-2">
 <img 
 src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=REPLASTIC-10" 
 alt="QR" 
-className="w-20 h-20 border-2 border-black p-1"
+className="w-24 h-24 border-2 border-black p-0.5"
 />
-<span className="text-xs font-mono font-bold mt-1">#RP-84920</span>
 </div>
 
-<div className="text-[10px] font-bold border-t border-black pt-1.5 mt-1">
-{t.receiptThanks}
+{/* Текст в две строки для крупного и четкого отображения */}
+<div className="text-xs font-black border-t-2 border-black pt-2 mt-2 leading-tight">
+<p>СПАСИБО ЗА ЧИСТЫЙ</p>
+<p className="text-sm tracking-wider mt-0.5">КЫРГЫЗСТАН!</p>
 </div>
-
-{/* Пустые отступы снизу (чтобы удобнее было оторвать чек вручную о гребенку) */}
-<div className="h-6 hidden print:block"></div>
 
 {/* КНОПКА ПЕЧАТИ (Прячется при печати) */}
 <button
