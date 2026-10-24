@@ -140,34 +140,35 @@ useEffect(() => {
   return (
     <div className="min-h-screen max-w-md mx-auto bg-emerald-950 text-white font-sans flex flex-col justify-between p-4 selection:bg-none">
       
-      {/* CSS-стили печати для узкой термоленты (58 мм) */}
-      <style>{`
-        @media print {
-          body * {
-            visibility: hidden !important;
-          }
-          #printable-receipt, #printable-receipt * {
-            visibility: visible !important;
-          }
-          #printable-receipt {
-            position: absolute !important;
-            left: 0 !important;
-            top: 0 !important;
-            width: 48mm !important;
-            max-width: 48mm !important;
-            margin: 0 !important;
-            padding: 2px !important;
-            background: #ffffff !important;
-            color: #000000 !important;
-            font-family: monospace, sans-serif !important;
-            font-size: 9px !important;
-            line-height: 1.1 !important;
-          }
-          .no-print {
-            display: none !important;
-          }
-        }
-      `}</style>
+   {/* ОБНОВЛЕННЫЕ СТИЛИ ПЕЧАТИ (Крупный шрифт, контраст, отступ для отрыва) */}
+<style>{`
+@media print {
+body * {
+visibility: hidden !important;
+}
+#printable-receipt, #printable-receipt * {
+visibility: visible !important;
+}
+#printable-receipt {
+position: absolute !important;
+left: 0 !important;
+top: 0 !important;
+width: 54mm !important; /* На всю ширину ленты */
+max-width: 54mm !important;
+margin: 0 !important;
+padding: 0 !important;
+background: #ffffff !important;
+color: #000000 !important;
+font-family: 'Courier New', monospace, sans-serif !important;
+font-size: 13px !important; /* Увеличенный чёткий шрифт */
+font-weight: bold !important; /* Жирный текст для высокой четкости */
+line-height: 1.2 !important;
+}
+.no-print {
+display: none !important;
+}
+}
+`}</style>
 
 {/* ШАПКА ТЕРМИНАЛА (Часы + Вращающийся Логотип + Переключатель Языков) */}
 <header className="no-print space-y-3 border-b border-emerald-800/60 pb-3">
@@ -309,56 +310,60 @@ useEffect(() => {
               <h2 className="text-lg font-bold text-white">{t.successTitle}</h2>
               <p className="text-[11px] text-emerald-300/80">{t.successDesc}</p>
             </div>{/* МИНИ-ЧЕК ДЛЯ ТЕРМОПРИНТЕРА */}
-            <div 
-              id="printable-receipt" 
-              className="bg-white text-black p-3 rounded-xl shadow-xl max-w-[200px] w-full text-center border border-gray-300 my-1"
-            >
-              {/* Шапка */}
-              <div className="font-extrabold text-sm tracking-tight border-b border-black pb-1 mb-1">
-                {t.receiptTitle}
-              </div>
-              
-              {/* Детали */}
-              <div className="text-[10px] font-mono text-left my-1 space-y-0.5">
-                <p className="flex justify-between">
-                  <span>{t.receiptType}:</span>
-                  <span className="font-bold">{t[selectedTypeKey]}</span>
-                </p>
-                <p className="flex justify-between">
-                  <span>{t.receiptVolume}:</span>
-                  <span>{t.receiptVolumeVal}</span>
-                </p>
-              </div>
+            {/* МИНИ-ЧЕК С КРУПНЫМ ЧЁТКИМ ШРИФТОМ */}
+<div 
+id="printable-receipt" 
+className="bg-white text-black p-4 rounded-xl shadow-xl max-w-[230px] w-full text-center border-2 border-black my-1"
+>
+{/* Шапка */}
+<div className="font-extrabold text-lg tracking-wider border-b-2 border-black pb-1 mb-1.5 uppercase">
+{t.receiptTitle}
+</div>
 
-              {/* Акция */}
-              <div className="border-t border-b border-dashed border-black py-1 my-1">
-                <span className="text-xs font-bold block uppercase">{t.receiptDiscount}</span>
-                <span className="text-[8px] block text-gray-700">{t.receiptPartners}</span>
-              </div>
+{/* Детали */}
+<div className="text-xs font-bold text-left my-1.5 space-y-1">
+<p className="flex justify-between">
+<span>{t.receiptType}:</span>
+<span className="font-extrabold">{t[selectedTypeKey]}</span>
+</p>
+<p className="flex justify-between">
+<span>{t.receiptVolume}:</span>
+<span>{t.receiptVolumeVal}</span>
+</p>
+</div>
 
-              {/* QR код */}
-              <div className="flex flex-col items-center justify-center my-1">
-                <img 
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=REPLASTIC-10" 
-                  alt="QR" 
-                  className="w-12 h-12 border border-black p-0.5"
-                />
-                <span className="text-[8px] font-mono mt-0.5">#RP-84920</span>
-              </div>
+{/* Крупный блок скидки */}
+<div className="border-t-2 border-b-2 border-black py-2 my-2 bg-gray-100">
+<span className="text-base font-black block tracking-wide">{t.receiptDiscount}</span>
+<span className="text-[10px] font-bold block text-black">{t.receiptPartners}</span>
+</div>
 
-              <div className="text-[8px] text-gray-500 border-t border-black pt-1">
-                {t.receiptThanks}
-              </div>
+{/* Увеличенный QR-код */}
+<div className="flex flex-col items-center justify-center my-2">
+<img 
+src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=REPLASTIC-10" 
+alt="QR" 
+className="w-20 h-20 border-2 border-black p-1"
+/>
+<span className="text-xs font-mono font-bold mt-1">#RP-84920</span>
+</div>
 
-              {/* КНОПКА ПЕЧАТИ (Прячется при печати) */}
-              <button
-                onClick={() => window.print()}
-                className="no-print mt-2 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95"
-              >
-                <QrCode className="w-4 h-4" />
-                {t.btnPrint}
-              </button>
-            </div>
+<div className="text-[10px] font-bold border-t border-black pt-1.5 mt-1">
+{t.receiptThanks}
+</div>
+
+{/* Пустые отступы снизу (чтобы удобнее было оторвать чек вручную о гребенку) */}
+<div className="h-6 hidden print:block"></div>
+
+{/* КНОПКА ПЕЧАТИ (Прячется при печати) */}
+<button
+onClick={() => window.print()}
+className="no-print mt-3 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-lg text-sm transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95"
+>
+<QrCode className="w-4 h-4" />
+{t.btnPrint}
+</button>
+</div>
 
             {/* Завершить */}
             <button 
