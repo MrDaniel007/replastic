@@ -141,16 +141,15 @@ useEffect(() => {
     <div className="min-h-screen max-w-md mx-auto bg-emerald-950 text-white font-sans flex flex-col justify-between p-4 selection:bg-none">
  {/* ОБНОВЛЕННЫЕ СТИЛИ С МАКСИМАЛЬНОЙ ШИРИНОЙ И БЕЗ ВТОРОЙ СТРАНИЦЫ */}
 <style>{`
+@media print {
 @page {
 margin: 0 !important;
 size: auto !important;
 }
-@media print {
 html, body {
 margin: 0 !important;
 padding: 0 !important;
-height: auto !important;
-overflow: hidden !important;
+background: #ffffff !important;
 }
 body * {
 visibility: hidden !important;
@@ -162,15 +161,12 @@ visibility: visible !important;
 position: absolute !important;
 left: 0 !important;
 top: 0 !important;
-width: 100% !important; /* На всю ширину ленты без полей */
-max-width: 100% !important;
-margin: 0 !important;
-padding: 0 !important;
+width: 58mm !important; /* Четкая ширина ленты */
+min-width: 58mm !important;
+padding: 8px 4px !important;
 background: #ffffff !important;
 color: #000000 !important;
 font-family: 'Courier New', monospace, sans-serif !important;
-page-break-after: avoid !important;
-page-break-inside: avoid !important;
 }
 .no-print {
 display: none !important;
@@ -316,54 +312,54 @@ display: none !important;
               </div>
               <h2 className="text-lg font-bold text-white">{t.successTitle}</h2>
               <p className="text-[11px] text-emerald-300/80">{t.successDesc}</p>
-            </div>{/* МИНИ-ЧЕК ДЛЯ ТЕРМОПРИНТЕРА */}
-            {/* МИНИ-ЧЕК С КРУПНЫМ ЧЁТКИМ ШРИФТОМ */}
-{/* МИНИ-ЧЕК БЕЗ РАМОК С КРУПНЫМ ШРИФТОМ НА ВСЮ ШИРИНУ */}
+            </div>
+
+{/* ЧЕК С ФИКСИРОВАННЫМИ РАЗМЕРАМИ И ВЫСОТОЙ */}
 <div 
 id="printable-receipt" 
-className="bg-white text-black p-2 rounded-xl shadow-xl max-w-[240px] w-full text-center my-1"
+className="bg-white text-black p-4 rounded-xl shadow-xl max-w-[240px] w-full text-center my-1 border-2 border-black"
 >
-{/* Крупный заголовок во всю ширину */}
-<div className="font-black text-xl tracking-widest border-b-2 border-black pb-1 mb-2 uppercase">
+{/* Крупный заголовок */}
+<div className="font-black text-2xl tracking-wider border-b-2 border-black pb-2 mb-2 uppercase text-black">
 {t.receiptTitle}
 </div>
 
-{/* Тара и Объем — Крупный шрифт без рамок */}
-<div className="text-sm font-black text-left my-2 space-y-1">
-<p className="flex justify-between">
+{/* Тара и Объем с фиксированной высотой строки */}
+<div className="text-sm font-black text-left my-3 space-y-2 leading-relaxed">
+<p className="flex justify-between items-center">
 <span>{t.receiptType}:</span>
-<span className="text-base">{t[selectedTypeKey]}</span>
+<span className="text-base font-extrabold">{t[selectedTypeKey]}</span>
 </p>
-<p className="flex justify-between">
+<p className="flex justify-between items-center">
 <span>{t.receiptVolume}:</span>
-<span className="text-base">{t.receiptVolumeVal}</span>
+<span className="text-base font-extrabold">{t.receiptVolumeVal}</span>
 </p>
 </div>
 
-{/* Огромная Скидка без названий магазинов */}
-<div className="border-t-2 border-b-2 border-black py-2 my-2">
-<span className="text-xl font-black block tracking-wider">{t.receiptDiscount}</span>
+{/* Высокий блок скидки */}
+<div className="border-t-2 border-b-2 border-black py-3 my-3">
+<span className="text-2xl font-black block tracking-widest uppercase">{t.receiptDiscount}</span>
 </div>
 
-{/* Четкий QR-код */}
-<div className="flex flex-col items-center justify-center my-2">
+{/* QR-код с ЧЁТКИМИ ФИКСИРОВАННЫМИ РАЗМЕРАМИ (120x120px) */}
+<div className="flex flex-col items-center justify-center my-3 min-h-[120px]">
 <img 
-src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=REPLASTIC-10" 
+src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=REPLASTIC-10" 
 alt="QR" 
-className="w-24 h-24 border-2 border-black p-0.5"
+className="w-28 h-28 border-2 border-black p-1 object-contain"
 />
 </div>
 
-{/* Текст в две строки для крупного и четкого отображения */}
-<div className="text-xs font-black border-t-2 border-black pt-2 mt-2 leading-tight">
+{/* Текст внизу */}
+<div className="text-xs font-black border-t-2 border-black pt-2 mt-2 leading-normal uppercase">
 <p>СПАСИБО ЗА ЧИСТЫЙ</p>
-<p className="text-sm tracking-wider mt-0.5">КЫРГЫЗСТАН!</p>
+<p className="text-sm tracking-wider mt-1 font-extrabold">КЫРГЫЗСТАН!</p>
 </div>
 
-{/* КНОПКА ПЕЧАТИ (Прячется при печати) */}
+{/* КНОПКА ПЕЧАТИ */}
 <button
 onClick={() => window.print()}
-className="no-print mt-3 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-lg text-sm transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95"
+className="no-print mt-4 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-lg text-sm transition-all flex items-center justify-center gap-1.5 shadow-md active:scale-95"
 >
 <QrCode className="w-4 h-4" />
 {t.btnPrint}
