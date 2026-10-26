@@ -13,7 +13,7 @@ const TRANSLATIONS = {
     petDesc: "До 2.0 литров",
     hdpeBottle: "ПНД Флакон",
     hdpeDesc: "Бытовая химия",
-    discountTag: "Скидка 10%",
+    discountTag: "2 Балла",
     scanLaser: "Сканирование лазером...",
     scanWeight: "Измерение массы и плотности...",
     scanCrush: "Автоматическое измельчение прессом...",
@@ -24,7 +24,7 @@ const TRANSLATIONS = {
     receiptType: "Тара",
     receiptVolume: "Объем",
     receiptVolumeVal: "-70% объема",
-    receiptDiscount: "СКИДКА 10%",
+    receiptDiscount: "2 Балла",
     receiptPartners: "Globus / Народный / Alma",
     receiptThanks: "Спасибо за чистый Кыргызстан!",
     btnPrint: "Распечатать чек 🖨️",
@@ -40,7 +40,7 @@ const TRANSLATIONS = {
     petDesc: "2.0 литрге чейин",
     hdpeBottle: "ПНД Флакон",
     hdpeDesc: "Тиричилик химиясы",
-    discountTag: "10% арзандатуу",
+    discountTag: "2 Балл",
     scanLaser: "Лазер менен сканерлөө...",
     scanWeight: "Салмагын жана тыгыздыгын өлчөө...",
     scanCrush: "Пресс менен майдалоо...",
@@ -51,7 +51,7 @@ const TRANSLATIONS = {
     receiptType: "Идиш",
     receiptVolume: "Көлөмү",
     receiptVolumeVal: "-70% көлөмгө азайды",
-    receiptDiscount: "10% АРЗАНДАТУУ",
+    receiptDiscount: "2 Балл",
     receiptPartners: "Globus / Народный / Alma",
     receiptThanks: "Таза Кыргызстан үчүн рахмат!",
     btnPrint: "Чекти чыгаруу 🖨️",
@@ -67,7 +67,7 @@ const TRANSLATIONS = {
     petDesc: "Up to 2.0 liters",
     hdpeBottle: "HDPE Container",
     hdpeDesc: "Household liquids",
-    discountTag: "10% Discount",
+    discountTag: "2 Points",
     scanLaser: "Laser scanning in progress...",
     scanWeight: "Measuring weight & density...",
     scanCrush: "Automated shredding & pressing...",
@@ -78,7 +78,7 @@ const TRANSLATIONS = {
     receiptType: "Item",
     receiptVolume: "Volume",
     receiptVolumeVal: "-70% reduced",
-    receiptDiscount: "10% DISCOUNT",
+    receiptDiscount: "2 Points",
     receiptPartners: "Globus / Narodnyi / Alma",
     receiptThanks: "Thank you for clean Kyrgyzstan!",
     btnPrint: "Print Receipt 🖨️",
@@ -233,50 +233,54 @@ display: none !important;
       <main className="my-auto py-4">
         
         {/* ШАГ 1: ВЫБОР ТАРЫ */}
-        {step === 'select' && (
-          <div className="no-print flex flex-col items-center text-center space-y-5">
-            <div>
-              <h2 className="text-xl font-bold text-white mb-0.5">{t.step1Title}</h2>
-              <p className="text-xs text-emerald-300/80">{t.step1Desc}</p>
-            </div><div className="flex flex-col gap-3 w-full">
-              <button
-                onClick={() => handleStartProcess('petBottle')}
-                className="bg-emerald-900/60 hover:bg-emerald-800/80 border-2 border-emerald-500/50 hover:border-emerald-400 p-4 rounded-2xl flex items-center justify-between transition-all active:scale-95 shadow-lg"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="bg-emerald-400/20 p-3 rounded-xl text-emerald-300">
-                    <Recyclable className="w-8 h-8" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-bold text-sm block text-white">{t.petBottle}</span>
-                    <span className="text-[10px] text-emerald-300/70">{t.petDesc}</span>
-                  </div>
-                </div>
-                <span className="bg-emerald-400 text-emerald-950 font-extrabold text-[10px] px-2.5 py-1 rounded-md">
-                  {t.discountTag}
-                </span>
-              </button>
-
-              <button
-                onClick={() => handleStartProcess('hdpeBottle')}
-                className="bg-emerald-900/30 hover:bg-emerald-800/50 border border-emerald-800/60 p-4 rounded-2xl flex items-center justify-between transition-all active:scale-95"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="bg-emerald-800/40 p-3 rounded-xl text-emerald-400">
-                    <Award className="w-8 h-8" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-bold text-sm block text-emerald-200">{t.hdpeBottle}</span>
-                    <span className="text-[10px] text-emerald-400/60">{t.hdpeDesc}</span>
-                  </div>
-                </div>
-                <span className="bg-emerald-800 text-emerald-300 text-[10px] px-2.5 py-1 rounded-md">
-                  {t.discountTag}
-                </span>
-              </button>
-            </div>
+{step === 'select' && (
+  <div className="no-print flex flex-col items-center text-center space-y-5">
+    <div>
+      <h2 className="text-xl font-bold text-white mb-0.5">{t.step1Title}</h2>
+      <p className="text-xs text-emerald-300/80">{t.step1Desc}</p>
+    </div>
+    
+    <div className="flex flex-col gap-3 w-full">
+      {/* Первая кнопка */}
+      <button
+        onClick={() => handleStartProcess('petBottle')}
+        className="bg-emerald-950/40 hover:bg-emerald-800/70 border border-emerald-800/60 hover:border-emerald-500 p-4 rounded-2xl flex items-center justify-between transition-all active:scale-95 shadow-lg"
+      >
+        <div className="flex items-center gap-3">
+          <div className="bg-emerald-400/20 p-3 rounded-xl text-emerald-300">
+            <Recyclable className="w-8 h-8" />
           </div>
-        )}
+          <div className="text-left">
+            <span className="font-bold text-sm block text-white">{t.petBottle}</span>
+            <span className="text-[10px] text-emerald-300/70">{t.petDesc}</span>
+          </div>
+        </div>
+        <span className="bg-emerald-400 text-emerald-950 font-extrabold text-[10px] px-2.5 py-1 rounded-md">
+          {t.discountTag}
+        </span>
+      </button>
+
+      {/* Вторая кнопка */}
+      <button
+        onClick={() => handleStartProcess('hdpeBottle')}
+        className="bg-emerald-950/40 hover:bg-emerald-800/70 border border-emerald-800/60 hover:border-emerald-500 p-4 rounded-2xl flex items-center justify-between transition-all active:scale-95 shadow-lg"
+      >
+        <div className="flex items-center gap-3">
+          <div className="bg-emerald-800/40 p-3 rounded-xl text-emerald-400">
+            <Award className="w-8 h-8" />
+          </div>
+          <div className="text-left">
+            <span className="font-bold text-sm block text-emerald-200">{t.hdpeBottle}</span>
+            <span className="text-[10px] text-emerald-400/60">{t.hdpeDesc}</span>
+          </div>
+        </div>
+        <span className="bg-emerald-400 text-emerald-950 font-extrabold text-[10px] px-2.5 py-1 rounded-md">
+          {t.discountTag}
+        </span>
+      </button>
+    </div>
+  </div>
+)}
 
         {/* ШАГ 2: ПЛАВНАЯ АНИМАЦИЯ СЖАТИЯ И ТАЙМЕР */}
         {step === 'processing' && (
@@ -344,7 +348,7 @@ className="bg-white text-black p-4 rounded-xl shadow-xl max-w-[240px] w-full tex
 {/* QR-код с ЧЁТКИМИ ФИКСИРОВАННЫМИ РАЗМЕРАМИ (120x120px) */}
 <div className="flex flex-col items-center justify-center my-3 min-h-[120px]">
 <img 
-src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=REPLASTIC-10" 
+src="https://replastic.vercel.app/receipt" 
 alt="QR" 
 className="w-28 h-28 border-2 border-black p-1 object-contain"
 />
