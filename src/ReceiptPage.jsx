@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CheckCircle2, Copy, Sparkles, Store, Gift, ShieldCheck, Heart } from 'lucide-react';
 
 export default function ReceiptPage() {
-  const [lang, setLang] = useState('ky');
+  const [lang, setLang] = useState('ru');
   const [copied, setCopied] = useState(false);
 
   // Генерируем случайный код скидки или используем фиксированный
@@ -20,7 +20,7 @@ export default function ReceiptPage() {
       howToUse: 'Балдарды кантип колдонсо болот?',
       step1: 'Globus, Народный же Фрунзе маркеттерине барыңыз',
       step2: 'Кассадан машыктыруучу промокодду же ушул QR-кодду көрсөтүңүз',
-      step3: 'Сатып алууда 10% арзандатуу же бонус алыңыз',
+      step3: 'Сатып алууда 2 балл бонус алыңыз',
       ecoImpact: 'Сиз 1 пластик бөтөлкөнү кайра иштетүүгө тапшырдыңыз!',
       footer: 'Replastic Eco Terminal System © 2026'
     },
@@ -35,7 +35,7 @@ export default function ReceiptPage() {
       howToUse: 'Как использовать баллы?',
       step1: 'Придите в супермаркет Globus, Народный или Фрунзе',
       step2: 'Покажите этот промокод или QR-код на кассе',
-      step3: 'Получите скидку 10% или бонусы на покупку',
+      step3: 'Получите 2 балла бонусов на покупку',
       ecoImpact: 'Вы сдали 1 ПЭТ-бутылку на вторичную переработку!',
       footer: 'Replastic Eco Terminal System © 2026'
     }
@@ -58,7 +58,7 @@ export default function ReceiptPage() {
             <span className="text-xs font-semibold tracking-wider text-emerald-300">REPLASTIC BONUS</span>
           </div>
           <button
-            onClick={() => setLang(lang === 'ky' ? 'ru' : 'ky')}
+            onClick={() => setLang(lang === 'ru' ? 'ky' : 'ru')}
             className="text-xs font-bold bg-emerald-900/60 border border-emerald-500/40 hover:bg-emerald-800 text-emerald-200 px-3 py-1.5 rounded-full transition-all"
           >
             {lang === 'ky' ? 'РУС 🇷🇺' : 'КЫР 🇰🇬'}
