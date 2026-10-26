@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {RefreshCw as Recyclable, CheckCircle2, QrCode, RefreshCw, Zap, Award, Globe, Leaf } from 'lucide-react';
+import qrcode from './assets/qrcode.jpg'; // Импортируем картинку QR-кода из папки проекта
 
 // Переводы на 3 языка (RU / KG / EN)
 const TRANSLATIONS = {
@@ -348,7 +349,7 @@ className="bg-white text-black p-4 rounded-xl shadow-xl max-w-[240px] w-full tex
 {/* QR-код с ЧЁТКИМИ ФИКСИРОВАННЫМИ РАЗМЕРАМИ (120x120px) */}
 <div className="flex flex-col items-center justify-center my-3 min-h-[120px]">
 <img 
-src="https://replastic.vercel.app/receipt" 
+src={qrcode} 
 alt="QR" 
 className="w-28 h-28 border-2 border-black p-1 object-contain"
 />
